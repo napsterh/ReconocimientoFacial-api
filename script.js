@@ -4,7 +4,9 @@ Promise.all([
   faceapi.nets.tinyFaceDetector.loadFromUri('/models'),
   faceapi.nets.faceLandmark68Net.loadFromUri('/models'),
   faceapi.nets.faceRecognitionNet.loadFromUri('/models'),
-  faceapi.nets.faceExpressionNet.loadFromUri('/models')
+  faceapi.nets.faceExpressionNet.loadFromUri('/models'),
+  faceapi.nets.ageGenderNet.loadFromUri('/models')
+
 ]).then(comenzarVideo)
 
 
@@ -22,7 +24,7 @@ video.addEventListener('play', ()=>{
   const tamanioPantalla = { width:video.width, height:video.height }
   faceapi.matchDimensions(canvas, tamanioPantalla)
   setInterval(async () => {
-    const deteccion = await faceapi.detectAllFaces(video, new faceapi.TinyFaceDetectorOptions()).withFaceLandmarks().withFaceExpressions()
+    const deteccion = await faceapi.detectAllFaces(video, new faceapi.TinyFaceDetectorOptions()).withFaceLandmarks().withFaceExpressions().withAgeAndGender().withFaceDescriptors()
     console.log('cantidad:',deteccion)
     const detectarRedimensionar = faceapi.resizeResults(deteccion, tamanioPantalla)
     canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height)
